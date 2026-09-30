@@ -1,0 +1,25 @@
+name: Garder Supabase actif
+
+# Les projets Supabase gratuits se mettent en pause après ~7 jours sans activité API.
+# Ce ping hebdomadaire évite la mise en veille pour cette appli utilisée au CDF
+# (voir la section "Supabase en veille" de CLAUDE.md pour le détail).
+on:
+  schedule:
+    - cron: '0 12 * * 1' # tous les lundis à 12h00 UTC
+  workflow_dispatch: {} # permet de le déclencher manuellement depuis l'onglet Actions du repo
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping Supabase (lecture simple sur la table articles)
+        run: |
+          CODE=$(curl -sS -o /dev/null -w "%{http_code}" \
+            "${{ secrets.SUPABASE_URL }}/rest/v1/articles?select=id&limit=1" \
+            -H "apikey: ${{ secrets.SUPABASE_ANON_KEY }}" \
+            -H "Authorization: Bearer ${{ secrets.SUPABASE_ANON_KEY }}")
+          echo "Code de réponse Supabase : $CODE"
+          if [ "$CODE" -ge 400 ]; then
+            echo "::error::Supabase a répondu avec une erreur ($CODE) — vérifier les secrets SUPABASE_URL/SUPABASE_ANON_KEY ou l'état du projet."
+            exit 1
+          fi

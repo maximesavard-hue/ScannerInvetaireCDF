@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Scanner Inventaire CDF</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header class="app-header">
+  <div>
+    <h1>Scanner CDF</h1>
+    <div class="sous-titre">Inventaire Solotech au Centre de Foire</div>
+  </div>
+</header>
+
+<main class="container">
+
+  <div class="session-panel">
+    <label>Type de mouvement</label>
+    <div class="type-grid" id="type-grid">
+      <!-- Boutons générés par scanner.js à partir de TYPES_MOUVEMENT -->
+    </div>
+
+    <label for="input-evenement">Événement (optionnel)</label>
+    <input type="text" id="input-evenement" placeholder="Ex: Salon de l'auto 2026">
+
+    <div class="session-utilisateur">
+      <span>Scanné par : <strong id="affiche-utilisateur">–</strong></span>
+      <button class="btn-icon" id="btn-changer-utilisateur" aria-label="Changer d'utilisateur">✏️</button>
+    </div>
+  </div>
+
+  <div id="reader"></div>
+
+  <div class="scanner-controles">
+    <button class="btn btn-primary" id="btn-toggle-scan">▶️ Démarrer le scan</button>
+    <button class="btn btn-ghost hidden" id="btn-torch" style="width:auto;">🔦</button>
+  </div>
+
+  <div class="scanner-etat" id="scanner-etat">Choisis un type de mouvement, puis démarre le scan.</div>
+
+  <div class="section-title">
+    Scans de cette session
+    <span class="badge" id="count-scans" style="background:var(--panel);color:var(--grey);">0</span>
+  </div>
+  <ul id="liste-scans">
+    <li class="vide">Aucun scan pour l'instant.</li>
+  </ul>
+
+</main>
+
+<nav class="bottom-nav">
+  <a href="index.html" class="active"><span class="icon">📷</span>Scanner</a>
+  <a href="stock.html"><span class="icon">📦</span>Stock</a>
+  <a href="historique.html"><span class="icon">🕐</span>Historique</a>
+</nav>
+
+<div class="toast" id="toast"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/supabase.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
+<script src="js/utils.js"></script>
+<script src="js/scanner.js"></script>
+</body>
+</html>

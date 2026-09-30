@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Stock — Scanner Inventaire CDF</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header class="app-header">
+  <div>
+    <h1>Stock au CDF</h1>
+    <div class="sous-titre">Ce qui est physiquement sur place, là, maintenant</div>
+  </div>
+  <button class="btn-icon" id="btn-rafraichir" aria-label="Rafraîchir">🔄</button>
+</header>
+
+<main class="container">
+
+  <input type="text" class="recherche-input" id="recherche" placeholder="Chercher un article ou un code-barre…">
+
+  <div class="section-title">
+    Articles
+    <span class="badge" id="count-articles" style="background:var(--panel);color:var(--grey);">0</span>
+  </div>
+
+  <ul id="liste-stock">
+    <li class="loading">Chargement...</li>
+  </ul>
+
+</main>
+
+<nav class="bottom-nav">
+  <a href="index.html"><span class="icon">📷</span>Scanner</a>
+  <a href="stock.html" class="active"><span class="icon">📦</span>Stock</a>
+  <a href="historique.html"><span class="icon">🕐</span>Historique</a>
+</nav>
+
+<div class="toast" id="toast"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/supabase.js"></script>
+<script src="js/utils.js"></script>
+<script src="js/stock.js"></script>
+</body>
+</html>

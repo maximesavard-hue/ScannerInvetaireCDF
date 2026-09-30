@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Historique — Scanner Inventaire CDF</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header class="app-header">
+  <div>
+    <h1>Historique</h1>
+    <div class="sous-titre">Journal des mouvements (les 300 plus récents)</div>
+  </div>
+  <button class="btn-icon" id="btn-rafraichir" aria-label="Rafraîchir">🔄</button>
+</header>
+
+<main class="container">
+
+  <div class="filtre-row">
+    <select id="filtre-evenement">
+      <option value="">Tous les événements</option>
+    </select>
+    <select id="filtre-type">
+      <option value="">Tous les types</option>
+    </select>
+  </div>
+
+  <ul id="liste-historique">
+    <li class="loading">Chargement...</li>
+  </ul>
+
+</main>
+
+<nav class="bottom-nav">
+  <a href="index.html"><span class="icon">📷</span>Scanner</a>
+  <a href="stock.html"><span class="icon">📦</span>Stock</a>
+  <a href="historique.html" class="active"><span class="icon">🕐</span>Historique</a>
+</nav>
+
+<div class="toast" id="toast"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/supabase.js"></script>
+<script src="js/utils.js"></script>
+<script src="js/historique.js"></script>
+</body>
+</html>
