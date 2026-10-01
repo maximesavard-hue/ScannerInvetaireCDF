@@ -216,9 +216,10 @@ la machine utilisée.*
   pourquoi ce n'est pas encore public)
 - **Reste à faire avant utilisation réelle** :
   1. Rendre le repo public (ou passer à GitHub Pro) pour pouvoir activer GitHub Pages gratuitement
-  2. Créer le projet Supabase dédié et exécuter `supabase-tables.sql`
-  3. Remplacer les valeurs placeholder dans `js/supabase.js`
-  4. Configurer les secrets GitHub (`SUPABASE_URL`, `SUPABASE_ANON_KEY`) pour le workflow anti-pause
+  2. ~~Créer le projet Supabase dédié~~ ✅ fait (`zpixbecqyhuphjtzzfia`) — **reste à exécuter
+     `supabase-tables.sql`** dans le SQL Editor (tables absentes au 2026-10-01)
+  3. ~~Remplacer les valeurs placeholder dans `js/supabase.js`~~ ✅ fait
+  4. ~~Configurer les secrets GitHub~~ ✅ fait (2026-10-01)
   5. Activer GitHub Pages
   6. Tester le scan sur un vrai téléphone avec un vrai code-barre Solotech (le rendu caméra/permissions ne se
      teste pas fiablement autrement)
