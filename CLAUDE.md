@@ -216,8 +216,8 @@ la machine utilisée.*
   pourquoi ce n'est pas encore public)
 - **Reste à faire avant utilisation réelle** :
   1. Rendre le repo public (ou passer à GitHub Pro) pour pouvoir activer GitHub Pages gratuitement
-  2. ~~Créer le projet Supabase dédié~~ ✅ fait (`zpixbecqyhuphjtzzfia`) — **reste à exécuter
-     `supabase-tables.sql`** dans le SQL Editor (tables absentes au 2026-10-01)
+  2. ~~Créer le projet Supabase dédié~~ ✅ fait (`zpixbecqyhuphjtzzfia`), `supabase-tables.sql`
+     exécuté (sans RLS) et testé le 2026-10-01 : écriture articles/mouvements + calcul de `stock_cdf` OK
   3. ~~Remplacer les valeurs placeholder dans `js/supabase.js`~~ ✅ fait
   4. ~~Configurer les secrets GitHub~~ ✅ fait (2026-10-01)
   5. Activer GitHub Pages
