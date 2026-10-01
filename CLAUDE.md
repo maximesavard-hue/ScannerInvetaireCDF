@@ -209,8 +209,11 @@ la machine utilisée.*
 - **Scaffold du code créé** : `index.html` (scanner), `stock.html`, `historique.html`, `css/style.css`,
   `js/supabase.js`, `js/utils.js`, `js/scanner.js`, `js/stock.js`, `js/historique.js`, `supabase-tables.sql`,
   `.github/workflows/keep-supabase-awake.yml`.
-- Scan de codes-barres via la librairie `html5-qrcode` (CDN jsDelivr, testé et répond bien) — formats supportés :
-  Code128, Code39, EAN-13/8, UPC-A/E, Codabar, ITF, QR. Torche caméra activée si l'appareil le supporte.
+- Scan de codes-barres : `html5-qrcode` remplacé le 2026-10-01 (lisait mal les codes en vrai test) par l'API
+  `BarcodeDetector` native si dispo, sinon le ponyfill ZXing WebAssembly `barcode-detector@3.2.2` (CDN jsDelivr,
+  cas de l'iPhone). Caméra 1920x1080, mise au point continue, boutons torche/zoom si supportés, code accepté
+  après 2 lectures identiques, sons distincts (OK / inconnu / erreur). Champ de saisie manuelle sous la caméra
+  (marche aussi avec un lecteur USB/Bluetooth qui tape le code + Entrée).
 - **Repo GitHub** : `maximesavard-hue/ScannerInvetaireCDF`, **public** depuis le 2026-10-01 —
   https://github.com/maximesavard-hue/ScannerInvetaireCDF
 - **Appli en ligne (GitHub Pages)** : https://maximesavard-hue.github.io/ScannerInvetaireCDF/ — c'est le lien à
