@@ -97,3 +97,37 @@ function echapperHtml(texte) {
 function vibrerConfirmation() {
   if (navigator.vibrate) navigator.vibrate(80)
 }
+
+// ---------- Sons de confirmation ----------
+// Un son distinct par résultat, pour savoir sans regarder l'écran si le scan a pris.
+let contexteAudio = null
+
+// À appeler pendant un clic de l'utilisateur : les navigateurs bloquent le son sinon
+function activerSon() {
+  try {
+    if (!contexteAudio) contexteAudio = new (window.AudioContext || window.webkitAudioContext)()
+    if (contexteAudio.state === 'suspended') contexteAudio.resume()
+  } catch (e) { /* pas de son sur cet appareil */ }
+}
+
+function jouerNote(frequence, debut, duree) {
+  const osc = contexteAudio.createOscillator()
+  const volume = contexteAudio.createGain()
+  osc.type = 'square'
+  osc.frequency.value = frequence
+  volume.gain.value = 0.15
+  osc.connect(volume).connect(contexteAudio.destination)
+  const t = contexteAudio.currentTime + debut
+  osc.start(t)
+  osc.stop(t + duree)
+}
+
+// type : 'ok' (bip aigu court), 'inconnu' (deux bips), 'erreur' (son grave)
+function bip(type) {
+  if (!contexteAudio) return
+  try {
+    if (type === 'ok') jouerNote(1800, 0, 0.09)
+    else if (type === 'inconnu') { jouerNote(1200, 0, 0.09); jouerNote(1200, 0.15, 0.09) }
+    else jouerNote(220, 0, 0.35)
+  } catch (e) { /* ignore */ }
+}

@@ -35,14 +35,24 @@
     </div>
   </div>
 
-  <div id="reader"></div>
+  <div id="reader" class="hidden">
+    <video id="video" playsinline muted></video>
+    <div class="viseur"></div>
+  </div>
 
   <div class="scanner-controles">
     <button class="btn btn-primary" id="btn-toggle-scan">▶️ Démarrer le scan</button>
+    <button class="btn btn-ghost hidden" id="btn-zoom" style="width:auto;">🔍 1x</button>
     <button class="btn btn-ghost hidden" id="btn-torch" style="width:auto;">🔦</button>
   </div>
 
   <div class="scanner-etat" id="scanner-etat">Choisis un type de mouvement, puis démarre le scan.</div>
+
+  <!-- Saisie manuelle : code illisible, étiquette abîmée, ou lecteur USB/Bluetooth (agit comme un clavier) -->
+  <form class="saisie-manuelle" id="form-manuel" autocomplete="off">
+    <input type="text" id="input-code-manuel" placeholder="Ou tape le code-barre à la main…" enterkeyhint="done">
+    <button type="submit" class="btn btn-ghost">Ajouter</button>
+  </form>
 
   <div class="section-title">
     Scans de cette session
@@ -64,8 +74,20 @@
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="js/supabase.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
 <script src="js/utils.js"></script>
 <script src="js/scanner.js"></script>
+<!-- Lecteur de codes-barres : utilise celui intégré au téléphone (Android/Chrome) s'il existe,
+     sinon ZXing (WebAssembly, très fiable sur les codes 1D) — c'est le cas sur iPhone -->
+<script type="module">
+  import { BarcodeDetector as LecteurZXing } from 'https://cdn.jsdelivr.net/npm/barcode-detector@3.2.2/dist/es/ponyfill.js'
+  let classe = LecteurZXing
+  try {
+    // Certains Android ont l'API native mais sans aucun format disponible : on garde ZXing dans ce cas
+    if ('BarcodeDetector' in window && (await window.BarcodeDetector.getSupportedFormats()).includes('code_128')) {
+      classe = window.BarcodeDetector
+    }
+  } catch (e) { /* on garde ZXing */ }
+  window.ClasseLecteur = classe
+</script>
 </body>
 </html>

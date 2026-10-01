@@ -207,12 +207,58 @@ input, select { font-family: inherit; }
 /* ---------- Lecteur caméra ---------- */
 
 #reader {
+  position: relative;
   border-radius: var(--radius);
   overflow: hidden;
   border: 2px solid var(--line);
   margin-bottom: 12px;
   background: #000;
 }
+
+#reader video {
+  display: block;
+  width: 100%;
+  max-height: 55vh;
+  object-fit: cover;
+}
+
+/* Bande de visée horizontale : les codes-barres sont larges et peu hauts */
+.viseur {
+  position: absolute;
+  left: 8%;
+  right: 8%;
+  top: 50%;
+  height: 32%;
+  transform: translateY(-50%);
+  border: 2px solid var(--gold);
+  border-radius: 8px;
+  box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.35);
+  pointer-events: none;
+  transition: border-color 0.15s;
+}
+
+/* Flash vert au moment d'une lecture réussie */
+#reader.lu .viseur { border-color: var(--ok); border-width: 4px; }
+
+.saisie-manuelle {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 18px;
+}
+
+.saisie-manuelle input {
+  flex: 1;
+  min-width: 0;
+  background: var(--ink);
+  border: 1px solid var(--line);
+  color: var(--white);
+  border-radius: var(--radius);
+  padding: 12px 14px;
+  font-size: 1rem;
+  font-family: var(--font-mono);
+}
+
+.saisie-manuelle .btn { width: auto; }
 
 .scanner-controles {
   display: flex;
