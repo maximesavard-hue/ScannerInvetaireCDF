@@ -211,34 +211,19 @@ la machine utilisée.*
   `.github/workflows/keep-supabase-awake.yml`.
 - Scan de codes-barres via la librairie `html5-qrcode` (CDN jsDelivr, testé et répond bien) — formats supportés :
   Code128, Code39, EAN-13/8, UPC-A/E, Codabar, ITF, QR. Torche caméra activée si l'appareil le supporte.
-- **Repo GitHub** : `maximesavard-hue/ScannerInvetaireCDF`, créé **en privé** pour l'instant —
-  https://github.com/maximesavard-hue/ScannerInvetaireCDF (voir "Bloqué — action requise" ci-dessous pour
-  pourquoi ce n'est pas encore public)
-- **Reste à faire avant utilisation réelle** :
-  1. Rendre le repo public (ou passer à GitHub Pro) pour pouvoir activer GitHub Pages gratuitement
-  2. ~~Créer le projet Supabase dédié~~ ✅ fait (`zpixbecqyhuphjtzzfia`), `supabase-tables.sql`
-     exécuté (sans RLS) et testé le 2026-10-01 : écriture articles/mouvements + calcul de `stock_cdf` OK
-  3. ~~Remplacer les valeurs placeholder dans `js/supabase.js`~~ ✅ fait
-  4. ~~Configurer les secrets GitHub~~ ✅ fait (2026-10-01)
-  5. Activer GitHub Pages
-  6. Tester le scan sur un vrai téléphone avec un vrai code-barre Solotech (le rendu caméra/permissions ne se
-     teste pas fiablement autrement)
-
-## Bloqué — action requise de Maxime
-
-Deux actions ont été bloquées par un filtre de sécurité automatique de Claude Code (pas un choix de Claude) :
-1. **Rendre le repo public** — nécessaire pour héberger gratuitement sur GitHub Pages (Pages privé = payant).
-2. **Ouvrir un navigateur pour créer le projet Supabase** — Claude n'a aucun accès/jeton Supabase sur cette
-   machine ; sans navigateur, il ne peut pas créer le projet lui-même.
-
-Pour débloquer, une des options suivantes :
-- Créer le projet Supabase soi-même (2 min sur supabase.com/dashboard → New Project) et donner à Claude l'URL +
-  la clé anon publique (Project Settings → API) → Claude peut alors tout faire depuis là (SQL, secrets, config).
-- Ou donner à Claude un token d'accès personnel Supabase (supabase.com/dashboard/account/tokens) pour qu'il
-  pilote tout via le CLI/API sans navigateur.
-- Rendre le repo public soi-même (Settings → Danger Zone → Change visibility) une fois prêt.
+- **Repo GitHub** : `maximesavard-hue/ScannerInvetaireCDF`, **public** depuis le 2026-10-01 —
+  https://github.com/maximesavard-hue/ScannerInvetaireCDF
+- **Appli en ligne (GitHub Pages)** : https://maximesavard-hue.github.io/ScannerInvetaireCDF/ — c'est le lien à
+  ajouter en raccourci sur les téléphones du CDF
+- **Supabase** : projet dédié `zpixbecqyhuphjtzzfia`, `supabase-tables.sql` exécuté (sans RLS) et testé le
+  2026-10-01 (écriture articles/mouvements + calcul de `stock_cdf` OK). Clés dans `js/supabase.js`, secrets
+  GitHub configurés pour le workflow anti-pause. Pas de jeton d'accès Supabase sur la machine : les changements
+  de schéma SQL doivent être collés par Maxime dans le SQL Editor.
 - Thème visuel repris d'`inventaire-outils` (industriel-luxe : charbon `#0c0d0c` + doré `#cda449`, Oswald +
   JetBrains Mono) pour une cohérence visuelle entre les deux apps de Maxime.
+- **Reste à faire avant utilisation réelle** :
+  1. Tester le scan sur un vrai téléphone avec un vrai code-barre Solotech (le rendu caméra/permissions ne se
+     teste pas fiablement autrement)
 
 ---
 
