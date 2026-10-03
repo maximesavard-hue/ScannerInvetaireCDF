@@ -214,6 +214,9 @@ la machine utilisée.*
   cas de l'iPhone). Caméra 1920x1080, mise au point continue, boutons torche/zoom si supportés, code accepté
   après 2 lectures identiques, sons distincts (OK / inconnu / erreur). Champ de saisie manuelle sous la caméra
   (marche aussi avec un lecteur USB/Bluetooth qui tape le code + Entrée).
+- Lecteur USB : Maxime a un scanner USB au CDF (branché au téléphone via hub UGREEN). La page scanner écoute
+  le clavier globalement : frappe rapide (<100 ms entre touches) + Entrée = un scan, sans toucher de champ.
+  Chaque déclenchement compte (pas d'anti-doublon, contrairement à la caméra).
 - **Repo GitHub** : `maximesavard-hue/ScannerInvetaireCDF`, **public** depuis le 2026-10-01 —
   https://github.com/maximesavard-hue/ScannerInvetaireCDF
 - **Appli en ligne (GitHub Pages)** : https://maximesavard-hue.github.io/ScannerInvetaireCDF/ — c'est le lien à

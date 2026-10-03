@@ -258,6 +258,37 @@ elFormManuel.addEventListener('submit', (e) => {
   traiterScan(code)
 })
 
+// ---------- Lecteur USB/Bluetooth (se comporte comme un clavier) ----------
+// Le lecteur "tape" le code très vite puis appuie sur Entrée. On l'écoute sur toute la page :
+// pas besoin de toucher le champ de saisie avant chaque scan.
+let tamponLecteur = ''
+let derniereToucheTimestamp = 0
+
+document.addEventListener('keydown', (e) => {
+  // Si on écrit dans un champ (événement, nom d'article, saisie manuelle), le champ s'en occupe
+  if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return
+
+  const maintenant = Date.now()
+  if (maintenant - derniereToucheTimestamp > 100) tamponLecteur = '' // trop lent : c'est une personne, pas un lecteur
+  derniereToucheTimestamp = maintenant
+
+  if (e.key === 'Enter') {
+    if (tamponLecteur.length >= 3) {
+      e.preventDefault() // évite de "recliquer" le dernier bouton touché
+      activerSon()
+      traiterScan(tamponLecteur)
+    }
+    tamponLecteur = ''
+    return
+  }
+  if (e.key.length === 1) tamponLecteur += e.key
+})
+
+// Quitter le champ événement après Entrée, sinon le prochain scan USB s'écrirait dedans
+elEvenement.addEventListener('keydown', (e) => {
+  if (e.key === 'Enter') elEvenement.blur()
+})
+
 async function traiterScan(codeBarre) {
   if (!typeActuel) {
     showToast('Choisis un type de mouvement d\'abord', 'warning')
