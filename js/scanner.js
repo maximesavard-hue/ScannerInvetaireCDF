@@ -2,6 +2,7 @@
 
 const elTypeGrid = document.getElementById('type-grid')
 const elEvenement = document.getElementById('input-evenement')
+const elCoffre = document.getElementById('input-coffre')
 const elAfficheUtilisateur = document.getElementById('affiche-utilisateur')
 const elBtnChangerUtilisateur = document.getElementById('btn-changer-utilisateur')
 const elBtnToggleScan = document.getElementById('btn-toggle-scan')
@@ -284,9 +285,12 @@ document.addEventListener('keydown', (e) => {
   if (e.key.length === 1) tamponLecteur += e.key
 })
 
-// Quitter le champ événement après Entrée, sinon le prochain scan USB s'écrirait dedans
-elEvenement.addEventListener('keydown', (e) => {
-  if (e.key === 'Enter') elEvenement.blur()
+// Quitter les champs événement/coffre après Entrée, sinon le prochain scan USB s'écrirait dedans.
+// Bonus : si le coffre a son propre code-barre, on touche le champ coffre et on le scanne.
+;[elEvenement, elCoffre].forEach((champ) => {
+  champ.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') champ.blur()
+  })
 })
 
 async function traiterScan(codeBarre) {
@@ -307,6 +311,7 @@ async function traiterScan(codeBarre) {
         type: typeActuel,
         quantite: 1,
         evenement: elEvenement.value.trim() || null,
+        coffre: elCoffre.value.trim() || null,
         utilisateur: getUtilisateur(),
       })
       .select()
@@ -358,6 +363,7 @@ function rendreListeScans() {
         <div class="carte-nom ${aNommer ? 'a-nommer' : ''}" data-role="nom">${aNommer ? '⚠️ ' + echapperHtml(article.nom) : echapperHtml(article.nom)}</div>
         <div class="carte-meta">${echapperHtml(article.code_barre)}
           · <span class="badge" style="background:${typeInfo.couleur}22;color:${typeInfo.couleur};">${typeInfo.court}</span>
+          ${mouvement.coffre ? '· 🧳 ' + echapperHtml(mouvement.coffre) : ''}
           · ${formatDateHeure(mouvement.created_at)}
         </div>
         ${aNommer ? `<input type="text" class="rename-input" placeholder="Nommer cet article…" data-role="rename-input">` : ''}

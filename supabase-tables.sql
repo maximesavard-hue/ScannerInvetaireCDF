@@ -27,6 +27,7 @@ create table mouvements (
   )),
   quantite integer not null default 1 check (quantite > 0),
   evenement text,
+  coffre text,         -- numéro du coffre (road case) dans lequel l'item a été scanné, optionnel
   utilisateur text,
   note text,
   created_at timestamp with time zone default now()
@@ -35,6 +36,7 @@ create table mouvements (
 create index mouvements_article_id_idx on mouvements(article_id);
 create index mouvements_created_at_idx on mouvements(created_at desc);
 create index mouvements_evenement_idx on mouvements(evenement);
+create index mouvements_coffre_idx on mouvements(coffre);
 
 -- 3. Vue du stock actuel au CDF, par article.
 -- reception_surplus et retour_stock_cdf font entrer du matériel au CDF (+)

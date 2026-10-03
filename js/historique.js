@@ -5,6 +5,7 @@
 const elListeHistorique = document.getElementById('liste-historique')
 const elFiltreEvenement = document.getElementById('filtre-evenement')
 const elFiltreType = document.getElementById('filtre-type')
+const elFiltreCoffre = document.getElementById('filtre-coffre')
 const elBtnRafraichir = document.getElementById('btn-rafraichir')
 
 const LIMITE = 300
@@ -29,6 +30,7 @@ async function chargerHistorique() {
   mouvements = data
   construireFiltreEvenements()
   construireFiltreTypes()
+  construireFiltreCoffres()
   rendreListe()
 }
 
@@ -46,6 +48,20 @@ function construireFiltreEvenements() {
   elFiltreEvenement.value = evenementActuel
 }
 
+function construireFiltreCoffres() {
+  const coffreActuel = elFiltreCoffre.value
+  const coffres = [...new Set(mouvements.map((m) => m.coffre).filter(Boolean))].sort()
+
+  elFiltreCoffre.innerHTML = '<option value="">Tous les coffres</option>'
+  coffres.forEach((c) => {
+    const option = document.createElement('option')
+    option.value = c
+    option.textContent = c
+    elFiltreCoffre.appendChild(option)
+  })
+  elFiltreCoffre.value = coffreActuel
+}
+
 function construireFiltreTypes() {
   if (elFiltreType.children.length > 1) return // déjà construit
   Object.entries(TYPES_MOUVEMENT).forEach(([cle, info]) => {
@@ -59,10 +75,12 @@ function construireFiltreTypes() {
 function rendreListe() {
   const evenementFiltre = elFiltreEvenement.value
   const typeFiltre = elFiltreType.value
+  const coffreFiltre = elFiltreCoffre.value
 
   const filtres = mouvements.filter((m) => {
     if (evenementFiltre && m.evenement !== evenementFiltre) return false
     if (typeFiltre && m.type !== typeFiltre) return false
+    if (coffreFiltre && m.coffre !== coffreFiltre) return false
     return true
   })
 
@@ -86,7 +104,7 @@ function rendreListe() {
           <span class="badge" style="background:${typeInfo.couleur}22;color:${typeInfo.couleur};">${typeInfo.label}</span>
           · ${m.quantite}x · ${formatDateHeure(m.created_at)}
         </div>
-        <div class="carte-meta">${echapperHtml(codeBarre)}${m.evenement ? ' · ' + echapperHtml(m.evenement) : ''}${m.utilisateur ? ' · ' + echapperHtml(m.utilisateur) : ''}</div>
+        <div class="carte-meta">${echapperHtml(codeBarre)}${m.evenement ? ' · ' + echapperHtml(m.evenement) : ''}${m.coffre ? ' · 🧳 ' + echapperHtml(m.coffre) : ''}${m.utilisateur ? ' · ' + echapperHtml(m.utilisateur) : ''}</div>
       </div>
       <button class="btn-icon" data-role="supprimer" aria-label="Supprimer ce mouvement">🗑️</button>
     `
@@ -114,6 +132,7 @@ async function supprimerMouvement(m, li) {
 
 elFiltreEvenement.addEventListener('change', rendreListe)
 elFiltreType.addEventListener('change', rendreListe)
+elFiltreCoffre.addEventListener('change', rendreListe)
 elBtnRafraichir.addEventListener('click', chargerHistorique)
 
 chargerHistorique()

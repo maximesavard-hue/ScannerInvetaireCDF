@@ -378,12 +378,14 @@ input, select { font-family: inherit; }
 
 .filtre-row {
   display: flex;
+  flex-wrap: wrap;
   gap: 8px;
   margin-bottom: 14px;
 }
 
 .filtre-row select {
-  flex: 1;
+  flex: 1 1 140px;
+  min-width: 0;
   background: var(--panel);
   border: 1px solid var(--line);
   color: var(--white);
