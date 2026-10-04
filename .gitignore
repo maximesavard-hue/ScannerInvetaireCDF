@@ -1,0 +1,4 @@
+# Jetons / secrets locaux — ne jamais publier (repo public)
+supabasetoken.txt
+*.token
+.supabase-token

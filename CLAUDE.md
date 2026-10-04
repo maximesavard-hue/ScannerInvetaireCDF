@@ -201,6 +201,30 @@ créé) :
 
 ---
 
+## ⏸️ PROJET EN PAUSE depuis le 2026-10-04
+
+Ce qui a été construit jusqu'ici est un **prototype exploratoire** : il a servi à Maxime pour voir ce qui est
+possible (scan caméra, lecteur USB, stock calculé, historique, coffres). **Le projet sera retravaillé** une fois
+que Maxime aura rencontré Solotech pour comprendre leurs besoins réels et définir concrètement l'application.
+
+**À la reprise :**
+1. Demander à Maxime ce qui est ressorti des rencontres avec Solotech **avant** de coder quoi que ce soit.
+   Tout le reste de ce fichier (décisions par défaut, structure de BD, flux, V2) est une hypothèse de départ,
+   pas une spec : à revalider ou réécrire selon ces besoins.
+2. Questions à clarifier avec Solotech (préparées lors du prototype) :
+   - Format du décompte/rapport qu'ils veulent recevoir (PDF, Excel, courriel, fréquence) et leurs
+     identifiants : utilisent-ils le même code-barre que leur système ? un numéro d'item / de série ?
+   - Les codes-barres Solotech sont-ils uniques par item (numéro de série) ou partagés par modèle ? Ça change
+     tout le comptage (scan unitaire vs quantités).
+   - Quelle symbologie (Code128, Code39…) — certains codes étaient difficiles à lire à la caméra.
+   - Les coffres (road cases) ont-ils leur propre code-barre / numéro officiel chez Solotech ?
+   - Objection à ce que les données soient accessibles via une clé publique (pas de login, pas de RLS) ?
+   - Qui scanne : seulement le personnel CDF, ou aussi des techniciens Solotech ?
+3. Les **données de test** saisies pendant le prototype sont encore dans la base (4 articles, 5 mouvements au
+   2026-10-04) : les effacer (avec l'accord de Maxime) avant toute utilisation réelle.
+4. Vérifier que le jeton Supabase dans `~/.supabase-token` est encore valide (expiration possible), sinon en
+   redemander un.
+
 ## État actuel du déploiement
 
 *Section tenue à jour par Claude au fil des sessions — source de vérité pour reprendre le travail, peu importe
@@ -232,9 +256,16 @@ la machine utilisée.*
   sur le scanner, attaché à chaque scan, filtrable dans l'historique.
 - Thème visuel repris d'`inventaire-outils` (industriel-luxe : charbon `#0c0d0c` + doré `#cda449`, Oswald +
   JetBrains Mono) pour une cohérence visuelle entre les deux apps de Maxime.
-- **Reste à faire avant utilisation réelle** :
-  1. Tester le scan sur un vrai téléphone avec un vrai code-barre Solotech (le rendu caméra/permissions ne se
-     teste pas fiablement autrement)
+- **Sécurité** : `.gitignore` bloque `supabasetoken.txt` / `*.token` (repo public). Un fichier
+  `supabasetoken.txt` contenant le jeton existe dans le dossier du projet sur le PC de Maxime — jamais committé.
+  Le jeton a aussi été collé dans le chat de la session du 2026-10-03.
+- **Workflow anti-pause** : lancé manuellement le 2026-10-04 pour validation, puis automatique chaque lundi.
+  Garde le projet Supabase actif pendant la pause.
+- **Non testé / à valider à la reprise** :
+  - Nouveau moteur de scan caméra (ZXing/natif) : publié mais pas encore retesté par Maxime sur téléphone.
+  - Lecteur USB via hub UGREEN : code prêt, pas encore testé avec le vrai matériel (vérifier aussi que la
+    disposition clavier ne change pas les caractères du code).
+  - Champ coffre : testé côté base de données seulement.
 
 ---
 
