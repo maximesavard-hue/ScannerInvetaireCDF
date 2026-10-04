@@ -223,8 +223,13 @@ la machine utilisée.*
   ajouter en raccourci sur les téléphones du CDF
 - **Supabase** : projet dédié `zpixbecqyhuphjtzzfia`, `supabase-tables.sql` exécuté (sans RLS) et testé le
   2026-10-01 (écriture articles/mouvements + calcul de `stock_cdf` OK). Clés dans `js/supabase.js`, secrets
-  GitHub configurés pour le workflow anti-pause. Pas de jeton d'accès Supabase sur la machine : les changements
-  de schéma SQL doivent être collés par Maxime dans le SQL Editor.
+  GitHub configurés pour le workflow anti-pause. **Jeton d'accès personnel Supabase** (donné le 2026-10-03,
+  expiration possible — en redemander un si refusé) stocké dans `~/.supabase-token` (hors repo, ne jamais
+  l'afficher ni le committer) : Claude exécute le SQL lui-même via
+  `POST https://api.supabase.com/v1/projects/zpixbecqyhuphjtzzfia/database/query` (corps `{"query": "..."}`).
+  Toujours garder `supabase-tables.sql` à jour en parallèle de chaque changement de schéma.
+- **Colonne `mouvements.coffre`** (text, optionnelle) ajoutée le 2026-10-03 : numéro de coffre saisi une fois
+  sur le scanner, attaché à chaque scan, filtrable dans l'historique.
 - Thème visuel repris d'`inventaire-outils` (industriel-luxe : charbon `#0c0d0c` + doré `#cda449`, Oswald +
   JetBrains Mono) pour une cohérence visuelle entre les deux apps de Maxime.
 - **Reste à faire avant utilisation réelle** :
